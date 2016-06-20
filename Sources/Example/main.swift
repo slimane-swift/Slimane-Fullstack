@@ -1,34 +1,46 @@
 import SlimaneFullStack
 
-let app = Slimane()
+let PORT = Process.env["PORT"] ?? "3000"
+let HOST = Process.env["HOST"] ?? "0.0.0.0"
 
-let port = Process.env["PORT"] ?? "3000"
-let host = Process.env["HOST"] ?? "0.0.0.0"
-
-app.use(BodyParser())
-app.use(Slimane.Static(root: "\(Process.cwd)/public"))
-
-// SessionConfig
-let sesConf = SessionConfig(
-    secret: "my-secret-value",
-    expires: 180,
-    HTTPOnly: true
-)
-
-// Enable to use session in Slimane
-app.use(SessionMiddleware(conf: sesConf))
-
-
-app.use { request, next, result in
-    print(request.path ?? "/")
-    next.respond(to: request, result: result)
-}
-
-app.get("/") { req, responder in
-    responder {
-        Response(body: "Welcome to Slimane!")
+if Process.arguments.count > 1 {
+    let mode = Process.arguments[1]
+    
+    if mode == "--cluster" {
+        func observeWorker(_ worker: inout Worker){
+            worker.send(.message("message from master"))
+            
+            worker.on { event in
+                if case .message(let str) = event {
+                    print(str)
+                }
+                    
+                else if case .online = event {
+                    print("Worker: \(worker.id) is online")
+                }
+                    
+                else if case .exit(let status) = event {
+                    print("Worker: \(worker.id) is dead. status: \(status)")
+                    worker = try! Cluster.fork(silent: false)
+                    observeWorker(&worker)
+                }
+            }
+        }
+        
+        // For Cluster app
+        if Cluster.isMaster {
+            print("Cluster mode is ready...")
+            for _ in 0..<OS.cpuCount {
+                var worker = try! Cluster.fork(silent: false)
+                observeWorker(&worker)
+            }
+            
+            try! Slimane().listen(port: Int(PORT)!)
+        } else {
+            launchApp()
+        }
     }
+} else {
+    // for single thread app
+    launchApp()
 }
-
-print("Slimane server is listening at \(host):\(port)")
-try! app.listen(host: host, port: Int(port)!)
