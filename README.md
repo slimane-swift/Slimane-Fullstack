@@ -8,6 +8,8 @@ FullStack Slimane that makes building web application faster.
 * [ ] HTTP Client
 * [ ] HTTPS Server
 * [ ] HTTPS Client
+* [x] ResponseSerializer
+* [x] RequestSerializer
 * [x] Routing
 * [x] Middleware
 * [x] Session
@@ -26,6 +28,7 @@ FullStack Slimane that makes building web application faster.
 * [x] Timer
 * [x] Hash
 * [x] SecureRandom
+* [x] Base64
 
 ## Getting Started
 
