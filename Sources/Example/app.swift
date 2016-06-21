@@ -53,9 +53,10 @@ func launchApp() {
         }
     }
     
-    app.get("/") { req, responder in
+    app.get("/websocket") { req, responder in
         responder {
-            Response(body: "Welcome to Slimane!")
+            let render = Render(engine: MustacheViewEngine(templateData: ["websocketHost": "\(HOST):\(PORT)"]), path: "websocket")
+            return Response(custom: render)
         }
     }
     
