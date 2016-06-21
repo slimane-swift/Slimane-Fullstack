@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel=icon href=/favicon.ico>
+    <title>Websocket Example by Slimane</title>
+  </head>
+  <body>
+    <h2>Please open the developer tool</h2>
+    <script>
+      var ws = new WebSocket('ws://localhost:3000/ws/chat');
+
+      console.log('connecting....')
+
+      ws.onopen = function() {
+        console.log('connected');
+      };
+
+      setInterval(function(){
+        console.log('send: PING');
+        ws.send("ping");
+      }, 5000);
+
+      ws.onmessage = function(ev) {
+        switch (ev.data.toLowerCase()) {
+          case "pong":
+            console.log('received: PONG');
+            break;
+          default:
+            break;
+        }
+      };
+    </script>
+  </body>
+
+</html>
