@@ -1,6 +1,6 @@
 # Slimane-Fullstack
 
-FullStack Slimane
+FullStack Slimane that makes building web application faster.
 
 ## Available Functionalities
 
