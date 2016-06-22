@@ -6,7 +6,7 @@
 //
 //
 
-import SlimaneFullStack
+import SlimaneFullstack
 
 func launchApp() {
     let app = Slimane()
