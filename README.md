@@ -84,7 +84,7 @@ touch main.swift
 
 #### Open `main.swift` with your preferred Editor and then add the following.
 ```swift
-import SlimaneFullStack
+import SlimaneFullstack
 
 do {
   app.get("/") { req, responder in

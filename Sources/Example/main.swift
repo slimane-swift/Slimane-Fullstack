@@ -1,4 +1,4 @@
-import SlimaneFullStack
+import SlimaneFullstack
 
 let PORT = Process.env["PORT"] ?? "3000"
 let HOST = Process.env["HOST"] ?? "0.0.0.0"
