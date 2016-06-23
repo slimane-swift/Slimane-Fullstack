@@ -56,67 +56,15 @@ make debug
 ```
 
 ## Start to create your application with Slimane
-
-### 1. Create Package.swift
-
 ```sh
-mkdir MySlimaneApp
-cd MySlimaneApp
-touch Package.swift
-```
-#### Open `Package.swift` with your preferred Editor and then add the following.
-```swift
-import PackageDescription
-
-let package = Package(
-	name: "MySlimaneApp",
-	dependencies: [
-      .Package(url: "https://github.com/noppoMan/Slimane-Fullstack.git", majorVersion: 0, minor: 1)
-  ]
-)
+npm i -g slimane-cli
+slimane new MyFirstApp -f
+cd MyFirstApp
+slimane build
+slimane run
 ```
 
-### 2. Create main.swift
-```sh
-mkdir Sources
-touch main.swift
-```
-
-#### Open `main.swift` with your preferred Editor and then add the following.
-```swift
-import SlimaneFullstack
-
-do {
-  app.get("/") { req, responder in
-      responder {
-          Response(body: "Welcome to Slimane!")
-      }
-  }
-
-  print("The server is listening at 0.0.0.0:3000")
-  try app.listen()
-} catch {
-  print(error)
-  // Should exit process
-}
-```
-
-### 3. Build
-```sh
-wget https://raw.githubusercontent.com/noppoMan/Slimane-Fullstack/master/Makefile
-make debug
-```
-
-### 4 Launch your App
-```sh
-$ .build/debug/MySlimaneApp
-# The server is listening at 0.0.0.0:3000
-
-
-$ curl http://localhost:3000/
-# Welcome to Slimane!
-```
-
+**That's it!**
 
 
 
